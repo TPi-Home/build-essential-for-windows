@@ -94,25 +94,10 @@ function Install-WingetPackageIfNotInstalled {
     return $false
 }
 
-# ==== Ensure WSL Ubuntu-Preview ====
-Write-Host "Ensuring WSL Ubuntu-Preview is installed..."
-try {
-    if (-not (wsl --list --verbose 2>$null | Select-String "Ubuntu-Preview")) {
-        wsl --install -d Ubuntu-Preview
-    } else {
-        Write-Host "Ubuntu-Preview is already installed."
-    }
-} catch {
-    Write-Warning "WSL check failed (this is safe to ignore if WSL is not enabled yet): $($_.Exception.Message)"
-}
-
 # ==== Package list ====
 # Add/remove/comment as desired; prefer exact Ids.
 $packages = @(
     # IDEs / Terminals
-    @{ Name="Visual Studio Community 2022";
-    Id="Microsoft.VisualStudio.2022.Community" }
-
     @{ Name="JetBrains Toolbox";            
     Id="JetBrains.Toolbox" }
     
@@ -127,13 +112,16 @@ $packages = @(
     # Editors
     @{ Name="Neovim";                       
     Id="Neovim.Neovim" }
-    
+
+    @{ Name ="Helix";
+    Id="Helix.Helix"}   
+
     @{ Name="Visual Studio Code";           
     Id="Microsoft.VisualStudioCode" }
 
     # Coding tools
-    @{ Name="Docker Desktop";               
-    Id="Docker.DockerDesktop" }
+    # @{ Name="Docker Desktop";               
+    # Id="Docker.DockerDesktop" }
 
     @{ Name="GitHub Desktop";               
     Id="GitHub.GitHubDesktop" }
@@ -150,7 +138,6 @@ $packages = @(
     
     # @{ Name="Cygwin";                       
     # Id="Cygwin.Cygwin" }
-
 
     # DB tools
     @{ Name="DB Browser for SQLite";        

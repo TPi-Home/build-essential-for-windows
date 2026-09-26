@@ -54,7 +54,7 @@ if ($IncludeSystemTemp) {
     Clear-Directory -Path $systemTemp
 }
 
-winget source update --force
+winget source update
 winget settings --enable InstallerHashOverride false
 
 
